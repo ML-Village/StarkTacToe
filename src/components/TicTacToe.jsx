@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Board from "./Board";
 import GameOver from "./GameOver";
 import GameState from "./GameState";
@@ -102,6 +102,29 @@ function TicTacToe() {
     return legal_moves
   }
 
+  const handleInfer = async ()=>{
+        //console.log(tiles)
+        //console.log(parseBoard3by3(tiles))
+        // console.log(legal_moves_generator(tiles,playerTurn))
+        const result = await fetch('http://localhost:8888/infer', {
+          
+          method: 'POST', 
+          body: JSON.stringify(legal_moves_generator(tiles,playerTurn))
+        
+        })
+
+        const newTiles = digitBoardToCharBoard(await result.json())
+        
+        console.log(newTiles)
+        setTiles(newTiles);
+        if (playerTurn === PLAYER_X) {
+          setPlayerTurn(PLAYER_O);
+        } else {
+          setPlayerTurn(PLAYER_X);
+        }
+
+  }
+  
   const handleReset = () => {
     setGameState(GameState.inProgress);
     setTiles(Array(9).fill(null));
@@ -183,15 +206,15 @@ function TicTacToe() {
   },[])
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col items-center justify-center">
 
-      <div className="flex flex-row justify-center items-center py-8">
+      <div className="flex flex-row items-center justify-center py-8">
 
         <img src="/starknaut.jpg" alt="stark logo" className="h-36"/>
         <h1 className="mx-5 font-bold text-4xl text-[#28286B]
         my-8
         ">Stark Tac Toe</h1>
-        <img src="/cuteRobot2.png" alt="cute robot" className="h-28 ml-8"/>
+        <img src="/cuteRobot2.png" alt="cute robot" className="ml-8 h-28"/>
       </div>
       <Board
         playerTurn={playerTurn}
@@ -200,32 +223,9 @@ function TicTacToe() {
         strikeClass={strikeClass}
       />
       
-      <button className="
-      my-4
-      py-1 px-2 bg-orange-500 mx-auto border rounded-lg"
+      <button className="px-2 py-1 mx-auto my-4 bg-orange-500 border rounded-lg "
       
-      onClick={async()=>{
-        //console.log(tiles)
-        //console.log(parseBoard3by3(tiles))
-        // console.log(legal_moves_generator(tiles,playerTurn))
-        const result = await fetch('http://localhost:8888/infer', {
-          
-          method: 'POST', 
-          body: JSON.stringify(legal_moves_generator(tiles,playerTurn))
-        
-        })
-
-        const newTiles = digitBoardToCharBoard(await result.json())
-        
-        console.log(newTiles)
-        setTiles(newTiles);
-        if (playerTurn === PLAYER_X) {
-          setPlayerTurn(PLAYER_O);
-        } else {
-          setPlayerTurn(PLAYER_X);
-        }
-
-      }}
+      onClick={handleInfer}
       >
         Infer
         </button>
