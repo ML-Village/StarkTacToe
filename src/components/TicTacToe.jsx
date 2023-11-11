@@ -5,6 +5,7 @@ import GameState from "./GameState";
 import Reset from "./Reset";
 import gameOverSoundAsset from "../sounds/game_over.wav";
 import clickSoundAsset from "../sounds/click.wav";
+//import * as ort from "onnxruntime-node";
 
 const gameOverSound = new Audio(gameOverSoundAsset);
 gameOverSound.volume = 0.2;
@@ -29,6 +30,8 @@ const winningCombinations = [
   { combo: [0, 4, 8], strikeClass: "strike-diagonal-1" },
   { combo: [2, 4, 6], strikeClass: "strike-diagonal-2" },
 ];
+
+//const InferenceSession = ort.InferenceSession;
 
 function checkWinner(tiles, setStrikeClass, setGameState) {
   for (const { combo, strikeClass } of winningCombinations) {
@@ -62,6 +65,7 @@ function TicTacToe() {
   const [playerTurn, setPlayerTurn] = useState(PLAYER_X);
   const [strikeClass, setStrikeClass] = useState();
   const [gameState, setGameState] = useState(GameState.inProgress);
+  const [currentState, setCurrentState] = useState(null);
 
   const handleTileClick = (index) => {
     if (gameState !== GameState.inProgress) {
@@ -82,11 +86,42 @@ function TicTacToe() {
     }
   };
 
+  const legal_moves_generator = (current_board_state,turn_monitor) =>{
+    const boardstateindigits = parseBoardFlat(current_board_state)
+    const turn_in_digits = turn_monitor === PLAYER_X ? 1 : 0
+    let legal_moves = []
+    boardstateindigits.forEach((s,i)=>{
+      if(s===2){
+        //console.log(i, s) 
+        let newBoardSet = boardstateindigits.slice()
+        newBoardSet[i] = turn_in_digits
+        legal_moves.push(newBoardSet)
+      }
+    })
+
+    return legal_moves
+  }
+
   const handleReset = () => {
     setGameState(GameState.inProgress);
     setTiles(Array(9).fill(null));
     setPlayerTurn(PLAYER_X);
     setStrikeClass(null);
+  };
+
+  const digitBoardToCharBoard = (board) => {
+
+    let charBoard = []
+    board.forEach((digit)=>{
+      if(digit === 1){
+        charBoard.push(PLAYER_X)
+      }else if(digit === 0){
+        charBoard.push(PLAYER_O)
+      }else{
+        charBoard.push(null)
+      }
+    })
+    return charBoard
   };
 
   const parseBoardFlat = (tiles) => {
@@ -135,6 +170,18 @@ function TicTacToe() {
     }
   }, [gameState]);
 
+  useEffect(() => {
+
+    // async function createSession() {
+    //     return await InferenceSession.create('./model/ttt.onnx');
+    // }
+    
+    // createSession().then(() => {
+    //   console.log("session created.")
+    // });
+
+  },[])
+
   return (
     <div className="flex flex-col justify-center items-center">
 
@@ -157,13 +204,30 @@ function TicTacToe() {
       my-4
       py-1 px-2 bg-orange-500 mx-auto border rounded-lg"
       
-      onClick={()=>{
-        console.log(tiles)
-        console.log(parseBoard3by3(tiles))
-      
+      onClick={async()=>{
+        //console.log(tiles)
+        //console.log(parseBoard3by3(tiles))
+        // console.log(legal_moves_generator(tiles,playerTurn))
+        const result = await fetch('http://localhost:8888/infer', {
+          
+          method: 'POST', 
+          body: JSON.stringify(legal_moves_generator(tiles,playerTurn))
+        
+        })
+
+        const newTiles = digitBoardToCharBoard(await result.json())
+        
+        console.log(newTiles)
+        setTiles(newTiles);
+        if (playerTurn === PLAYER_X) {
+          setPlayerTurn(PLAYER_O);
+        } else {
+          setPlayerTurn(PLAYER_X);
+        }
+
       }}
       >
-        Game State
+        Infer
         </button>
 
       <GameOver gameState={gameState} />
