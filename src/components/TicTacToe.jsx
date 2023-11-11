@@ -109,11 +109,11 @@ function TicTacToe() {
     let row3 = [];
     for (let i = 0; i < tiles.length; i++) {
       if (tiles[i] === PLAYER_X) {
-        i%3 === 0 ? row1.push(1) : i%3 === 1 ? row2.push(1) : row3.push(1);
+        i < 3 ? row1.push(1) : i < 6 ? row2.push(1) : row3.push(1);
       } else if (tiles[i] === PLAYER_O) {
-        i%3 === 0 ? row1.push(0) : i%3 === 1 ? row2.push(0) : row3.push(0);
+        i < 3  ? row1.push(0) : i < 6 ? row2.push(0) : row3.push(0);
       } else {
-        i%3 === 0 ? row1.push(2) : i%3 === 1 ? row2.push(2) : row3.push(2);
+        i < 3  ? row1.push(2) : i < 6 ? row2.push(2) : row3.push(2);
       }
     }
     return [row1, row2, row3];
@@ -157,7 +157,11 @@ function TicTacToe() {
       my-4
       py-1 px-2 bg-orange-500 mx-auto border rounded-lg"
       
-      onClick={()=>{console.log(parseBoard3by3(tiles))}}
+      onClick={()=>{
+        console.log(tiles)
+        console.log(parseBoard3by3(tiles))
+      
+      }}
       >
         Game State
         </button>
