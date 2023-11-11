@@ -138,13 +138,13 @@ function TicTacToe() {
   return (
     <div className="flex flex-col justify-center items-center">
 
-      <div className="flex flex-row justify-center items-center">
+      <div className="flex flex-row justify-center items-center py-8">
 
-        <img src="/stark.png" alt="stark logo" className="h-16"/>
-        <h1 className="mx-8 font-bold text-4xl text-[#28286B]
+        <img src="/starknaut.jpg" alt="stark logo" className="h-36"/>
+        <h1 className="mx-5 font-bold text-4xl text-[#28286B]
         my-8
         ">Stark Tac Toe</h1>
-        <img src="/cuteRobot2.png" alt="cute robot" className="h-20"/>
+        <img src="/cuteRobot2.png" alt="cute robot" className="h-28 ml-8"/>
       </div>
       <Board
         playerTurn={playerTurn}
