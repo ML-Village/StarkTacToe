@@ -223,12 +223,26 @@ function TicTacToe() {
         strikeClass={strikeClass}
       />
       
-      <button className="px-2 py-1 mx-auto my-4 bg-orange-500 border rounded-lg "
-      
-      onClick={handleInfer}
-      >
-        Infer
-        </button>
+
+      <div className="mt-8 flex flex-row
+      justify-center items-center
+      w-full">
+        
+
+        <label className="font-bold text-lg w-16 mx-2 text-gray-700">Choose models: </label>
+        <select id="models"  className="rounded-md border-2 border-[#28286B] mx-3 px-5 py-2.5" required>
+          <option>Model 0x852a0</option>
+
+          <option>Model 0x817cf</option>
+          <option>Model 0x34F50</option>
+          <option>Model 0xA2902</option>
+        </select>
+        <button className="p-2 px-5 my-4 bg-orange-500 border rounded-lg "
+        onClick={handleInfer}
+        >
+          Infer
+          </button>
+      </div>
 
       <GameOver gameState={gameState} />
       <Reset gameState={gameState} onReset={handleReset} />
