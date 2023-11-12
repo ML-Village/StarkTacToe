@@ -208,11 +208,11 @@ function TicTacToe() {
   return (
     <div className="flex flex-col items-center justify-center">
 
-      <div className="flex flex-row items-center justify-center py-8">
+      <div className="flex flex-row items-center justify-center pt-4 pb-4">
 
         <img src="/starknaut.jpg" alt="stark logo" className="h-36"/>
         <h1 className="mx-5 font-bold text-4xl text-[#28286B]
-        my-8
+        mb-8
         ">Stark Tac Toe</h1>
         <img src="/cuteRobot2.png" alt="cute robot" className="ml-8 h-28"/>
       </div>

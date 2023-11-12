@@ -5,7 +5,7 @@ function App() {
 
   return (
     <div className="w-full">
-    <header className="flex z-50 w-full bg-transparent text-sm py-4 border">
+    <header className="flex z-50 w-full bg-transparent text-sm py-2 px-28 border">
     <nav
         className="w-full mx-auto px-3 flex items-center justify-between"
         aria-label="Global"
