@@ -1,37 +1,21 @@
 import './App.css';
 import TicTacToe from './components/TicTacToe';
+import { StarknetConfig, InjectedConnector } from "@starknet-react/core";
+import {Navbar} from './components/NavBar.jsx';
 
 function App() {
+  const connectors = [
+    new InjectedConnector({ options: { id: "braavos" } }),
+    new InjectedConnector({ options: { id: "argentX" } }),
+  ];
 
   return (
+    <StarknetConfig connectors={connectors}>
     <div className="w-full">
-    <header className="flex z-50 w-full bg-transparent text-sm py-2 px-28">
-    <nav
-        className="w-full mx-auto px-3 flex items-center justify-between"
-        aria-label="Global"
-      >
-
-
-        
-          <button
-                type="button"
-                className="
-                ml-auto mr-1
-                py-3 px-4 inline-flex items-center gap-x-2 
-                text-sm font-semibold rounded-lg text-white
-                border border-transparent
-                bg-blue-600 hover:bg-blue-900 disabled:opacity-50 disabled:pointer-events-none"
-                data-hs-overlay="#hs-vertically-centered-modal"
-                onClick={() => {}}
-              >
-                0x0647..ca873
-            </button>
-
-
-      </nav>
-    </header>
+      <Navbar />
       <TicTacToe />;
     </div>
+    </StarknetConfig>
   )
 }
 

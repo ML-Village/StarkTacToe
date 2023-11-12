@@ -5,6 +5,8 @@ import GameState from "./GameState";
 import Reset from "./Reset";
 import gameOverSoundAsset from "../sounds/game_over.wav";
 import clickSoundAsset from "../sounds/click.wav";
+import { useAccount } from "@starknet-react/core";
+
 //import * as ort from "onnxruntime-node";
 
 const gameOverSound = new Audio(gameOverSoundAsset);
@@ -67,6 +69,8 @@ function TicTacToe() {
   const [gameState, setGameState] = useState(GameState.inProgress);
   const [currentState, setCurrentState] = useState(null);
 
+  const { account, address, status } = useAccount()
+
   const handleTileClick = (index) => {
     if (gameState !== GameState.inProgress) {
       return;
@@ -105,7 +109,7 @@ function TicTacToe() {
   const handleInfer = async ()=>{
         //console.log(tiles)
         //console.log(parseBoard3by3(tiles))
-        // console.log(legal_moves_generator(tiles,playerTurn))
+        console.log(JSON.stringify(legal_moves_generator(tiles,playerTurn)))
         const result = await fetch('http://localhost:8888/infer', {
           
           method: 'POST', 
@@ -228,20 +232,23 @@ function TicTacToe() {
       justify-center items-center
       w-full">
         
-
+        {status === 'disconnected'?
+        <div className="font-bold text-lg mx-2 text-red-500">~ Connect Wallet to Use AI Models ~</div>
+        :
+        <>
         <label className="font-bold text-lg w-16 mx-2 text-gray-700">Choose models: </label>
         <select id="models"  className="rounded-md border-2 border-[#28286B] mx-3 px-5 py-2.5" required>
-          <option>Model 0x852a0</option>
+          <option>Model: GPT-69420</option>
 
-          <option>Model 0x817cf</option>
-          <option>Model 0x34F50</option>
-          <option>Model 0xA2902</option>
+          <option>Model: GPT-420</option>
         </select>
         <button className="p-2 px-5 my-4 bg-orange-500 border rounded-lg "
         onClick={handleInfer}
         >
           Infer
           </button>
+        </>
+    }
       </div>
 
       <GameOver gameState={gameState} />

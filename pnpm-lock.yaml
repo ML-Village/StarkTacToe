@@ -5,12 +5,18 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@starknet-react/chains':
+    specifier: ^0.0.0
+    version: 0.0.0
   '@starknet-react/core':
     specifier: ^1.0.4
     version: 1.0.4(get-starknet-core@3.2.0)(react-dom@18.2.0)(react@18.2.0)(starknet@5.19.5)
   '@tensorflow/tfjs':
     specifier: ^4.13.0
     version: 4.13.0(seedrandom@3.0.5)
+  get-starknet-core:
+    specifier: ^3.2.0
+    version: 3.2.0(starknet@5.19.5)
   onnxruntime-node:
     specifier: ^1.16.2
     version: 1.16.2
@@ -20,6 +26,9 @@ dependencies:
   react-dom:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
+  starknet:
+    specifier: ^5.19.5
+    version: 5.19.5
 
 devDependencies:
   '@types/react':
@@ -438,6 +447,10 @@ packages:
     dependencies:
       '@noble/curves': 1.2.0
       '@noble/hashes': 1.3.2
+    dev: false
+
+  /@starknet-react/chains@0.0.0:
+    resolution: {integrity: sha512-dlNKp/3kPTrZxC4Ub+XBWW58qxl5tpMOOUeOfD8kkT28H2UcXS3zUYwyTnBdhtwUTpgrLyyKBJ5uw+8cMJRYBA==}
     dev: false
 
   /@starknet-react/core@1.0.4(get-starknet-core@3.2.0)(react-dom@18.2.0)(react@18.2.0)(starknet@5.19.5):
