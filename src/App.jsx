@@ -4,7 +4,7 @@ import TicTacToe from './components/TicTacToe';
 function App() {
 
   return (
-    <>
+    <div className="w-full">
     <header className="flex z-50 w-full bg-transparent text-sm py-4 border">
     <nav
         className="w-full mx-auto px-3 flex items-center justify-between"
@@ -31,7 +31,7 @@ function App() {
       </nav>
     </header>
       <TicTacToe />;
-    </>
+    </div>
   )
 }
 
