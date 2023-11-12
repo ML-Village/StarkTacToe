@@ -1,8 +1,18 @@
-# React + Vite
+# Stark Tac Toe
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Stark Tac Toe is a Tic Tac Toe game with the choice of pointing to an AI model backend for move decisions.
+The AI model is uploaded with ML Village's platform service so that it can be tagged for ownership and issued for sales circulation if desired.
 
-Currently, two official plugins are available:
+The ZK Machine Learning backend stack runs the inference and proof transaction receipts so that we can verify and validate ML inference via Stark proofs and ZK ML.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+(special thanks goes out to the tutorial seed reference of [[tic-tac-toe-react]](https://github.com/CodingWith-Adam/tic-tac-toe-react)'s repo and video)
+
+### Setup
+
+After cloning repo. Run the usual npm installation step.
+
+```
+npm install
+```
+
+
